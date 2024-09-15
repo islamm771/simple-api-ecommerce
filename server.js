@@ -6,6 +6,8 @@ import jwt from 'jsonwebtoken';
 const server = jsonServer.create();
 const router = jsonServer.router('db.json');
 const middlewares = jsonServer.defaults();
+const port = process.env.PORT || 3030; //  chose port from here like 8080, 3001
+
 
 const rules = auth.rewriter({
   users: 600,
@@ -120,9 +122,9 @@ server.use(rules);
 server.use(auth);
 server.use(router);
 
-server.listen(3030, () => {
+server.listen(port, () => {
   console.log('JSON Server is running on http://localhost:3030');
 });
 
-// Export the Server API
-module.exports = server;
+// // Export the Server API
+// module.exports = server;
