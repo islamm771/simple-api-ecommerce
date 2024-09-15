@@ -9,7 +9,8 @@ const middlewares = jsonServer.defaults();
 
 const rules = auth.rewriter({
   users: 600,
-  posts: 644,
+  products: 644,
+  carts: 644,
 });
 
 const SECRET_KEY = '#ds@sdfsdf59&ddf#'; // Use a strong secret key
