@@ -120,6 +120,8 @@ server.use(rules);
 server.use(auth);
 server.use(router);
 
-server.listen(3030, () => {
+const port = process.env.PORT || 3030;
+
+server.listen(port, () => {
   console.log('JSON Server is running on http://localhost:3030');
 });
