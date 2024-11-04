@@ -96,7 +96,6 @@ server.get('/users', authenticateToken, (req, res) => {
   res.status(200).json({ users });
 });
 
-
 server.use((req, res, next) => {
   if (req.method === 'POST' && req.path === '/register') {
     const { email } = req.body;
@@ -110,34 +109,89 @@ server.use((req, res, next) => {
   next();
 });
 
+
+// Route to get products by category
+server.get('/products/category/:categoryName', (req, res) => {
+  const { categoryName } = req.params;
+  
+  // Find the category ID associated with the provided category name
+  const category = router.db.get('categories').find({ name: categoryName }).value();
+
+  if (!category) {
+    return res.status(404).json({ error: 'Category not found' });
+  }
+
+  // Find products associated with this category ID
+  const products = router.db
+    .get('products')
+    .filter(product => product.category === category.name) // Assuming products have an array of category IDs
+    .value();
+
+  res.status(200).json(products);
+});
+
+// Route to get related products by product ID
+server.get('/products/:productId/related', (req, res) => {
+  const { productId } = req.params;
+
+  // Find the target product by ID
+  const targetProduct = router.db.get('products').find({ id: Number(productId) }).value();
+
+  if (!targetProduct) {
+    return res.status(404).json({ error: 'Product not found' });
+  }
+
+  // Find products that share at least one category with the target product, excluding the target product itself
+  const relatedProducts = router.db
+    .get('products')
+    .filter(product => 
+      product.id !== targetProduct.id &&
+      product.category == targetProduct.category
+    )
+    .value();
+
+  // Return the array of related products directly
+  res.status(200).json(relatedProducts);
+});
+
+
+
+
 // Protect the add to cart route with the authenticateToken middleware
 server.post('/cart/add', authenticateToken, (req, res) => {
-  const { userId, productId, quantity } = req.body;
+  const { userId, products } = req.body;
 
-  const userCart = router.db.get('carts').find({ userId }).value();
+  // Find or create the user's cart
+  let userCart = router.db.get('carts').find({ userId }).value();
 
-  if (userCart) {
+  if (!userCart) {
+    userCart = {
+      id: router.db.get('carts').value().length + 1,
+      userId,
+      products: []
+    };
+    router.db.get('carts').push(userCart).write();
+  }
+
+  // Iterate over the products array to add/update each product in the cart
+  products.forEach(({ productId, quantity }) => {
     const productInCart = userCart.products.find(p => p.productId === productId);
 
     if (productInCart) {
+      // Update the quantity if the product already exists in the cart
       productInCart.quantity = quantity;
     } else {
+      // Add the product to the cart if it doesn't exist
       userCart.products.push({ productId, quantity });
     }
+  });
 
-    router.db.get('carts').find({ userId }).assign(userCart).write();
-  } else {
-    router.db.get('carts')
-      .push({
-        id: router.db.get('carts').value().length + 1,
-        userId,
-        products: [{ productId, quantity }]
-      })
-      .write();
-  }
+  // Update the cart in the database
+  router.db.get('carts').find({ userId }).assign(userCart).write();
 
   res.status(200).json({ success: true, cart: userCart });
 });
+
 
 server.get('/cart/:userId', authenticateToken, (req, res) => {
   const { userId } = req.params;

@@ -26,18 +26,18 @@
     {
       "title": "T-shirt",
       "price": 20,
-      "description": "t-shirt red ",
-      "image": "https://res.cloudinary.com/dmsuevohb/image/upload/v1729681635/products/a1cu6nlwx88xwbcbmy9v.jpg",
+      "description": "t-shirt black cotton 100%",
+      "image": "https://res.cloudinary.com/dmsuevohb/image/upload/v1730585816/products/uoesbaj205j5fjt21z4s.jpg",
       "category": "clothes",
       "count": 10,
       "rate": 0,
       "id": 1
     },
     {
-      "title": "I Phone 13",
+      "title": "IPhone 13",
       "price": 300,
-      "description": "iphone 13 mobile phone",
-      "image": "https://res.cloudinary.com/dmsuevohb/image/upload/v1729681964/products/fajtejnakcguamyhrbzs.jpg",
+      "description": "Apple iPhone 13 smartphone. Announced Sep 2021. Features 6.1″ display, Apple A15 Bionic chipset, 3240 mAh battery, 512 GB storage, 4 GB RAM, Ceramic Shield",
+      "image": "https://res.cloudinary.com/dmsuevohb/image/upload/v1730585497/products/zytnlfpgfcnsharqzmw7.png",
       "category": "mobile",
       "count": 30,
       "rate": 0,
@@ -47,11 +47,71 @@
       "title": "dell precision 7720",
       "price": 200,
       "description": "dell laptop core i7 g8th",
-      "image": "https://res.cloudinary.com/dmsuevohb/image/upload/v1729685624/products/jbotfff6yl9t39sur3te.jpg",
+      "image": "https://res.cloudinary.com/dmsuevohb/image/upload/v1730585752/products/q6tyrdty6zlbn71hbqpc.jpg",
       "category": "laptops",
       "count": 50,
       "rate": 0,
       "id": 3
+    },
+    {
+      "title": "Samsung A52",
+      "price": 20,
+      "description": "samsung mobile galaxy a52 4g",
+      "image": "https://res.cloudinary.com/dmsuevohb/image/upload/v1730585345/products/utydpgieijx6zcqc3vcf.jpg",
+      "category": "mobile",
+      "count": 5,
+      "rate": 0,
+      "id": 4
+    },
+    {
+      "title": "Playstation 4",
+      "price": 500,
+      "description": "Sony PS4 Pro 1TB Gaming Console, Black",
+      "image": "https://res.cloudinary.com/dmsuevohb/image/upload/v1730587049/products/ie1cqrzlpdfneqmziljz.jpg",
+      "category": "gaming",
+      "count": 20,
+      "rate": 0,
+      "id": 5
+    },
+    {
+      "title": "Playstation 4 Controller",
+      "price": 80,
+      "description": "Sony PlayStation 4 Console Bundle with two Dualshock Wireless Controllers",
+      "image": "https://res.cloudinary.com/dmsuevohb/image/upload/v1730587450/products/tgarwju5jdhtp1ku5yp0.webp",
+      "category": "gaming",
+      "count": 50,
+      "rate": 0,
+      "id": 6
+    },
+    {
+      "title": "Samsung S24 Ultra",
+      "price": 250,
+      "description": "Samsung Galaxy S24 Ultra, 256GB, 12GB, 4G LTE, Dual SIM - Titanium Black · A New Era of Smartphone with Galaxy AI · Incredible Processor You've Never Experienced.",
+      "image": "https://res.cloudinary.com/dmsuevohb/image/upload/v1730733935/products/xxvm13bejfersw26b16f.avif",
+      "category": "mobile",
+      "count": 20,
+      "rate": 0,
+      "id": 7
+    },
+    {
+      "title": "HP 14-em0004ne",
+      "price": 600,
+      "description": "HP 14-em0004ne Laptop - AMD Ryzen 3-7320U - 4GB - 256GB SSD - AMD Radeon Integrated Graphics - 14\" HD - Win11 - Natural silver",
+      "image": "https://res.cloudinary.com/dmsuevohb/image/upload/v1730734620/products/ixqrwktlk4oba861g63o.png",
+      "category": "laptops",
+      "count": 10,
+      "rate": 0,
+      "id": 8
+    },
+    {
+      "title": "L’Oréal Paris Shampoo",
+      "price": 20,
+      "description": "L’Oréal Paris L'Oréal Paris Elvive Total Repair 5 Repairing Shampoo 400 ML",
+      "image": "https://res.cloudinary.com/dmsuevohb/image/upload/v1730735159/products/x7iyzp2li2pi6vzgwrtm.jpg",
+      "category": "cosmetics",
+      "count": 5,
+      "rate": 0,
+      "id": 9
     }
   ],
   "carts": [
@@ -61,11 +121,11 @@
       "products": [
         {
           "productId": 1,
-          "quantity": 1
+          "quantity": 2
         },
         {
           "productId": 2,
-          "quantity": 1
+          "quantity": 2
         }
       ]
     }
@@ -98,6 +158,10 @@
     {
       "id": 7,
       "name": "smartwatch"
+    },
+    {
+      "name": "cosmetics",
+      "id": 8
     }
   ]
 }
