@@ -4,7 +4,7 @@ import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import cloudinary from 'cloudinary';
 import multer from 'multer';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 
 const server = jsonServer.create();
