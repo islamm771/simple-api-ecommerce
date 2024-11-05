@@ -130,7 +130,7 @@ server.get('/profile', authenticateToken, async (req, res) => {
 });
 
 server.put('/profile/update', authenticateToken, async (req, res) => {
-    const { firstName, lastName, email, address, currentPassword, newPassword, confirmPassword, image } = req.body;
+    const { firstName, lastName, email, address, currentPassword, newPassword, confirmPassword } = req.body;
     const userId = req.user.sub; // Extract user ID from the authenticated token
 
     // Fetch the user from the database
@@ -157,17 +157,6 @@ server.put('/profile/update', authenticateToken, async (req, res) => {
         updatedPassword = await bcrypt.hash(newPassword, 10);
     }
 
-    // Handle image upload if a new image is provided
-    let updatedImage = user.image;
-    if (image) {
-        try {
-            const cloudinaryResult = await cloudinary.v2.uploader.upload(image, { folder: 'profile_pictures' });
-            updatedImage = cloudinaryResult.secure_url;
-        } catch (error) {
-            return res.status(500).json({ error: 'Failed to upload image' });
-        }
-    }
-
     // Update user information
     router.db.get('users')
         .find({ id: userId })
@@ -176,8 +165,7 @@ server.put('/profile/update', authenticateToken, async (req, res) => {
             lastName: lastName || user.lastName,
             email: email || user.email,
             address: address || user.address,
-            password: updatedPassword,
-            image: updatedImage
+            password: updatedPassword
         })
         .write();
 
