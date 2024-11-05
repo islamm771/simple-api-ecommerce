@@ -109,6 +109,80 @@ server.use((req, res, next) => {
   next();
 });
 
+server.get('/profile', authenticateToken, async (req, res) => {
+    try {
+        const userId = req.user.sub; // Extract user ID from the authenticated token
+        
+        // Fetch the user from the database
+        const user = router.db.get('users').find({ id: userId }).value();
+
+        // Check if user exists
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Respond with the user profile
+        res.status(200).json(user);
+    } catch (error) {
+        console.error("Error fetching user profile:", error);
+        res.status(500).json({ error: "An error occurred while fetching the profile" });
+    }
+});
+
+server.put('/profile/update', authenticateToken, async (req, res) => {
+    const { firstName, lastName, email, address, currentPassword, newPassword, confirmPassword, image } = req.body;
+    const userId = req.user.sub; // Extract user ID from the authenticated token
+
+    // Fetch the user from the database
+    const user = router.db.get('users').find({ id: userId }).value();
+
+    if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Verify the current password
+    const passwordMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!passwordMatch) {
+        return res.status(400).json({ error: 'Current password is incorrect' });
+    }
+
+    // Handle new password validation
+    if (newPassword && newPassword !== confirmPassword) {
+        return res.status(400).json({ error: 'New password and confirm password do not match' });
+    }
+
+    // Update password if newPassword is provided
+    let updatedPassword = user.password;
+    if (newPassword) {
+        updatedPassword = await bcrypt.hash(newPassword, 10);
+    }
+
+    // Handle image upload if a new image is provided
+    let updatedImage = user.image;
+    if (image) {
+        try {
+            const cloudinaryResult = await cloudinary.v2.uploader.upload(image, { folder: 'profile_pictures' });
+            updatedImage = cloudinaryResult.secure_url;
+        } catch (error) {
+            return res.status(500).json({ error: 'Failed to upload image' });
+        }
+    }
+
+    // Update user information
+    router.db.get('users')
+        .find({ id: userId })
+        .assign({
+            firstName: firstName || user.firstName,
+            lastName: lastName || user.lastName,
+            email: email || user.email,
+            address: address || user.address,
+            password: updatedPassword,
+            image: updatedImage
+        })
+        .write();
+
+    res.status(200).json({ success: true, message: 'Profile updated successfully' });
+});
 
 // Route to get products by category
 server.get('/products/category/:categoryName', (req, res) => {

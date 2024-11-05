@@ -9,10 +9,13 @@
     },
     {
       "email": "islamronaldo49@gmail.com",
-      "password": "$2a$10$UElGUqQSJE6VZHssaVp43OLoVuS1s8QI1DkOQkdbva6n461ZOubt6",
+      "password": "$2a$10$VDqm4eDUGWc8eKQoGzdXv.jYWB9/xBeVuSLio0Y3xAQpzJk5cZ5aS",
       "username": "islam",
       "gender": "male",
-      "id": 3
+      "id": 3,
+      "firstName": "Islam",
+      "lastName": "Ramadan",
+      "address": "Agami El hanouvil"
     },
     {
       "email": "alaa@a.com",
