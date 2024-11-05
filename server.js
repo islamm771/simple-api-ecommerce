@@ -217,8 +217,6 @@ server.get('/products/:productId/related', (req, res) => {
 });
 
 
-
-
 // Protect the add to cart route with the authenticateToken middleware
 server.post('/cart/add', authenticateToken, (req, res) => {
   const { userId, products } = req.body;
@@ -260,7 +258,7 @@ server.get('/cart/:userId', authenticateToken, (req, res) => {
   const userCart = router.db.get('carts').find({ userId: Number(userId) }).value();
 
   if (!userCart) {
-    return res.status(404).json({ error: 'No products in cart' });
+      return res.status(200).json({ cart: [] });
   }
 
   const detailedCart = userCart.products.map(item => {
