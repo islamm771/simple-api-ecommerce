@@ -172,6 +172,20 @@ server.put('/profile/update', authenticateToken, async (req, res) => {
     res.status(200).json({ success: true, message: 'Profile updated successfully' });
 });
 
+
+server.get('/products/search', (req, res) => {
+  const { q } = req.query; // `q` is the search term from the client
+  const data = router.db.get('products') // access the `products` data
+    .filter(product => 
+      product.title.toLowerCase().includes(q.toLowerCase()) ||
+      product.description.toLowerCase().includes(q.toLowerCase()) ||
+      product.category.toLowerCase().includes(q.toLowerCase())
+    )
+    .value(); // get the filtered results as an array
+
+  res.jsonp(data); // respond with the filtered products
+});
+
 // Route to get products by category
 server.get('/products/category/:categoryName', (req, res) => {
   const { categoryName } = req.params;
