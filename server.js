@@ -174,8 +174,8 @@ server.put('/profile/update', authenticateToken, async (req, res) => {
 
 
 server.get('/products/search', (req, res) => {
-  const { q } = req.query; // `q` is the search term from the client
-  const data = router.db.get('products') // access the `products` data
+  const { q } = req.query;
+  const data = router.db.get('products')
     .filter(product => 
       product.title.toLowerCase().includes(q.toLowerCase()) ||
       product.description.toLowerCase().includes(q.toLowerCase()) ||
@@ -305,6 +305,63 @@ server.delete('/cart/remove', authenticateToken, (req, res) => {
     res.status(404).json({ error: 'Cart not found' });
   }
 });
+
+
+server.post('/favourites/add', authenticateToken, (req, res) => {
+  const { userId, productId } = req.body;
+
+  let userFavorites = router.db.get('favourites').find({ userId }).value();
+
+  if (!userFavorites) {
+    userFavorites = { id: router.db.get('favourites').value().length + 1, userId, products: [] };
+    router.db.get('favourites').push(userFavorites).write();
+  }
+
+  if (!userFavorites.products.includes(productId)) {
+    userFavorites.products.push(productId);
+    router.db.get('favourites').find({ userId }).assign(userFavorites).write();
+  }
+
+  res.status(200).json({ success: true, favorites: userFavorites });
+});
+
+server.get('/favourites/:userId', authenticateToken, (req, res) => {
+  const { userId } = req.params;
+
+  const userFavorites = router.db.get('favourites').find({ userId: Number(userId) }).value();
+
+  if (!userFavorites) {
+    return res.status(200).json({ favourites: [] });
+  }
+
+  const favoriteProducts = userFavorites.products.map(productId => {
+    const product = router.db.get('products').find({ id: productId }).value();
+    return product;
+  });
+
+  res.status(200).json({ favourites: favoriteProducts });
+});
+
+server.delete('/favourites/remove', authenticateToken, (req, res) => {
+  const { userId, productId } = req.body;
+
+  const userFavorites = router.db.get('favourites').find({ userId }).value();
+
+  if (userFavorites) {
+    const updatedFavorites = userFavorites.products.filter(id => id !== productId);
+
+    if (updatedFavorites.length === 0) {
+      router.db.get('favourites').remove({ userId }).write();
+      res.status(200).json({ success: true, message: 'Favourites list deleted as it is empty' });
+    } else {
+      router.db.get('favourites').find({ userId }).assign({ products: updatedFavorites }).write();
+      res.status(200).json({ success: true, favourites: updatedFavorites });
+    }
+  } else {
+    res.status(404).json({ error: 'Favourites not found' });
+  }
+});
+
 
 // Route to get counts of users, products, and categories in a single response
 server.get('/count/all', authenticateToken, (req, res) => {

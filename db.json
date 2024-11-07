@@ -118,6 +118,7 @@
     }
   ],
   "carts": [],
+  "favourites": [],
   "categories": [
     {
       "id": 1,
