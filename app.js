@@ -79,6 +79,10 @@ app.post('/upload', upload.single('image'), (req, res) => {
 
 
 
+app.get("/", (req, res) => {
+    res.send("Welcome to simple e-commerce API")
+})
+
 app.use("/products", ProductsRoute)
 app.use("/auth", AuthRoute)
 app.use("/favourites", FavRoute)
