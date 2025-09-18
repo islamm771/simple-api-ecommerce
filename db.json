@@ -1,28 +1,38 @@
 {
   "users": [
     {
+      "id": 1,
       "email": "mo@m.com",
       "password": "$2a$10$gERGbUDM.uazFLmGeXuK.uZREDPQFMkW54fq4ib.RotYRpq/vmgee",
       "username": "Mohamed",
-      "gender": "male",
-      "id": 2
+      "gender": "male"
     },
     {
+      "id": 2,
       "email": "islamronaldo49@gmail.com",
-      "password": "$2a$10$Unq4JBf0qPmhhqeIKPJNJePCf9nSUNcYXWquCgyNribAxbXwu5JCe",
+      "password": "$2a$10$1hZohscva04PDfSG47Qn1uWRUPuXv2HuGG0ptDUfN50mascMvKh.q",
       "username": "islam",
       "gender": "male",
-      "id": 3,
-      "firstName": "Islam",
-      "lastName": "Ibrahim",
+      "firstName": "islam",
+      "lastName": "ibrahim",
       "address": "Agami El hanouvil"
     },
     {
+      "id": 3,
       "email": "alaa@a.com",
       "password": "$2a$10$NRAmJ3TI4UEgYDQWQQ1VKOAXUHqt2/CM0qJ2okXA9NKBDc41VeUuq",
       "username": "alaa",
-      "gender": "female",
-      "id": 4
+      "gender": "female"
+    },
+    {
+      "id": 4,
+      "username": "Ahmed",
+      "email": "ahmed@gmail.com",
+      "gender": "male",
+      "password": "$2a$10$TFwqLZfV96jmSqZkPuBzkeHH03cjW6gUh.EJfd.I/suL.6jfM34ze",
+      "address": "",
+      "firstName": "",
+      "lastName": ""
     }
   ],
   "products": [
@@ -117,8 +127,47 @@
       "id": 9
     }
   ],
-  "carts": [],
-  "favourites": [],
+  "carts": [
+    {
+      "id": 1,
+      "userId": 3,
+      "products": [
+        {
+          "productId": 4,
+          "quantity": 5
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "products": [
+        {
+          "productId": 8,
+          "quantity": 3
+        }
+      ]
+    }
+  ],
+  "favourites": [
+    {
+      "id": 2,
+      "userId": 3,
+      "products": [
+        3,
+        1,
+        4
+      ]
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "products": [
+        2,
+        8
+      ]
+    }
+  ],
   "categories": [
     {
       "id": 1,
