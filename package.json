@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "dev": "vercel dev",
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
@@ -11,7 +12,7 @@
   "description": "",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "cloudinary": "^2.5.1",
+    "cloudinary": "^2.7.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
